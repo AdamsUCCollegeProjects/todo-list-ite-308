@@ -1,10 +1,31 @@
 # Todo List + Nextcloud Lab
 
 This repository includes:
-- a todo app Docker image (`Dockerfile`)
+- a static todo app Docker image (`Dockerfile`)
+- a dynamic todo stack with Node.js, SQLite, and a REST API (`docker-compose.todo.yml`)
 - a Docker Compose lab for **Nginx + Nextcloud + MariaDB** (`docker-compose.yml`)
 
-## 1) Nginx + Nextcloud
+## 1) Dynamic Todo (Node.js + SQLite)
+
+Start the todo stack:
+
+```bash
+docker compose -f docker-compose.todo.yml up --build
+```
+
+Open the app at [http://localhost:3000](http://localhost:3000).
+
+The UI talks to a REST API backed by SQLite. Todos are stored in `/data/todos.sqlite` inside the container, mounted on the `todo_data` Docker volume — so they survive container restarts and rebuilds.
+
+Stop the stack:
+
+```bash
+docker compose -f docker-compose.todo.yml down
+```
+
+To remove persisted todos as well, add `-v` to drop the `todo_data` volume.
+
+## 2) Nginx + Nextcloud
 
 Start the stack:
 
@@ -45,7 +66,7 @@ docker compose start nextcloud-nginx
 2. Upload a file from the Files page.
 3. Download the same file to verify both operations.
 
-## 2) Git/GitHub
+## 3) Git/GitHub
 
 Show git version:
 
@@ -65,15 +86,20 @@ Push branch:
 git push -u origin chore/nextcloud-nginx-setup
 ```
 
-## 3) Docker
+## 4) Docker
 
-- `Dockerfile` runs the todo app with nginx.
-- `docker-compose.yml` runs the Nextcloud lab (nextcloud + mariadb + nginx proxy).
+- `Dockerfile` — static todo app served by nginx (port 80)
+- `api/Dockerfile` — dynamic todo app (Node.js + Express + SQLite, port 3000)
+- `docker-compose.todo.yml` — todo stack with persistent `todo_data` volume
+- `docker-compose.yml` — Nextcloud lab (nextcloud + mariadb + nginx proxy)
 
 ## Project layout
 
-- `index.html` / `styles.css` — todo app
-- `nginx/default.conf` — nginx config for todo static files
-- `Dockerfile` — todo app image (nginx Alpine)
-- `docker-compose.yml` — multi-service setup
+- `index.html` / `styles.css` / `app.js` — todo app UI
+- `api/server.js` / `api/db.js` — REST API and SQLite persistence
+- `nginx/default.conf` — nginx config for static todo files
+- `Dockerfile` — static todo image (nginx Alpine)
+- `api/Dockerfile` — dynamic todo image (Node Alpine)
+- `docker-compose.todo.yml` — todo stack with SQLite volume
+- `docker-compose.yml` — multi-service Nextcloud setup
 - `nextcloud-nginx/default.conf` — nginx reverse proxy for Nextcloud

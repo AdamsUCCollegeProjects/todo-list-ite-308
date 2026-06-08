@@ -274,3 +274,17 @@ body {
     font-size: 2rem;
     opacity: 0.5;
 }
+
+.status-banner {
+    margin-bottom: 1rem;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--accent);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.status-banner.is-error {
+    color: var(--danger);
+}
