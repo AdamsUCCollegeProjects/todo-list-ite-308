@@ -1,0 +1,8 @@
+services:
+  todo-app:
+    build: .
+    image: todo-list:local
+    container_name: todo-list-local
+    restart: unless-stopped
+    ports:
+      - "8080:80"

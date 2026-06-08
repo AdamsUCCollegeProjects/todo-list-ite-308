@@ -1,1 +1,5 @@
 .DS_Store
+.local-deploy.log
+.local-deploy.pid
+actions-runner/
+scripts/__pycache__/
