@@ -57,5 +57,6 @@ Keep the runner terminal open. Each push to `main` runs `.github/workflows/deplo
 ## Notes
 
 - Port **8080** is used by the todo app (`docker-compose.local.yml`). The Nextcloud stack in `docker-compose.yml` also maps 8080 — do not run both at once.
-- Poll interval defaults to 30s. Override with `POLL_INTERVAL_SECONDS=15 ./scripts/poll-deploy.sh`.
+- Poll interval defaults to 10s. Override with `POLL_INTERVAL_SECONDS=15 ./scripts/poll-deploy.sh`.
+- After restarting the watcher, run `./scripts/start-local-cicd.sh stop` then `./scripts/start-local-cicd.sh` so it picks up script changes.
 

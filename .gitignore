@@ -1,5 +1,6 @@
 .DS_Store
 .local-deploy.log
 .local-deploy.pid
+.local-deploy.sha
 actions-runner/
 scripts/__pycache__/
